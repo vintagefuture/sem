@@ -193,6 +193,9 @@ public class App
         // Get Employee
         Employee emp = a.getEmployee(255530);
 
+        // Display results
+        a.displayEmployee(emp);
+
         // Generate salaries report by role
         List<Employee> employees = a.salariesByRoleReport("Engineer");
         if (employees != null && !employees.isEmpty()) {
@@ -203,9 +206,6 @@ public class App
         } else {
             System.out.println("No salaries found or failed to generate the report.");
         }
-
-        // Display results
-        a.displayEmployee(emp);
 
         // Disconnect from database
         a.disconnect();
