@@ -182,6 +182,45 @@ public class App
         return employees;
     }
 
+    /**
+     * Gets all the current employees and salaries.
+     * @return A list of all employees and salaries, or null if there is an error.
+     */
+    public ArrayList<Employee> getAllSalaries()
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT employees.emp_no, employees.first_name, employees.last_name, salaries.salary "
+                            + "FROM employees, salaries "
+                            + "WHERE employees.emp_no = salaries.emp_no AND salaries.to_date = '9999-01-01' "
+                            + "ORDER BY employees.emp_no ASC";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Extract employee information
+            ArrayList<Employee> employees = new ArrayList<Employee>();
+            while (rset.next())
+            {
+                Employee emp = new Employee();
+                emp.emp_no = rset.getInt("employees.emp_no");
+                emp.first_name = rset.getString("employees.first_name");
+                emp.last_name = rset.getString("employees.last_name");
+                emp.salary = rset.getInt("salaries.salary");
+                employees.add(emp);
+            }
+            return employees;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get salary details");
+            return null;
+        }
+    }
+
     public static void main(String[] args)
     {
         // Create new Application
@@ -190,22 +229,11 @@ public class App
         // Connect to database
         a.connect();
 
-        // Get Employee
-        Employee emp = a.getEmployee(255530);
+        // Extract employee salary information
+        ArrayList<Employee> employees = a.getAllSalaries();
 
-        // Display results
-        a.displayEmployee(emp);
-
-        // Generate salaries report by role
-        List<Employee> employees = a.salariesByRoleReport("Engineer");
-        if (employees != null && !employees.isEmpty()) {
-            System.out.println("Salaries report by role Engineer");
-            for (Employee employee : employees) {
-                System.out.println(employee.first_name + " " + employee.last_name + ": " + employee.salary);
-            }
-        } else {
-            System.out.println("No salaries found or failed to generate the report.");
-        }
+        // Test the size of the returned data - should be 240124
+        System.out.println(employees.size());
 
         // Disconnect from database
         a.disconnect();
