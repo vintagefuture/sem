@@ -52,7 +52,7 @@ public class App
         }
     }
 
-    /**
+    /**w
      * Disconnect from the MySQL database.
      */
     public void disconnect()
