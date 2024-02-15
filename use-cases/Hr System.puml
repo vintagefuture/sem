@@ -1,0 +1,58 @@
+@startuml
+
+actor HR as "HR Advisor"
+
+rectangle Database
+
+rectangle "HR System" {
+    usecase UC1 as "Get salaries of all employees"
+    usecase UC2 as "Get salaries of employees in a department"
+    usecase UC3 as "Get salaries of employees in my department"
+    usecase UC4 as "Get salaries by role"
+    usecase UC5 as "Add employee's details"
+    usecase UC6 as "View employee's details"
+    usecase UC7 as "Update employee's details"
+    usecase UC8 as "Delete an employee's details"
+
+    usecase UCa as "Print salaries"
+    usecase UCb as "Pay employee"
+    usecase UCc as "Support promotion"
+    usecase UCd as "Keep employee's details up-to-date"
+    usecase UCe as "Keep company compliant with legislation"
+
+    HR - UC1
+    UC1 ..> UCa : include
+    UC1 - Database
+
+    HR - UC2
+    UC2 ..> UCa : include
+    UC2 - Database
+
+    HR - UC3
+    UC3 ..> UCa : include
+    UC3 - Database
+
+    HR - UC4
+    UC4 ..> UCa : include
+    UC4 - Database
+
+    HR - UC5
+    UC5 ..> UC6: include
+    UC5 - Database
+
+    HR - UC6
+    UC6 ..> UCb
+    UC6 - Database
+
+    UC6 ..> UCc
+
+    HR - UC7
+    UC7 ..> UCd
+    UC7 - Database
+
+    HR - UC8
+    UC8 ..> UCe
+    UC8 - Database
+}
+
+@enduml
