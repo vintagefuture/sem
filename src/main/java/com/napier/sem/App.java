@@ -42,7 +42,7 @@ public class App
             }
             catch (SQLException sqle)
             {
-                System.out.println("Failed to connect to database attempt " + Integer.toString(i));
+                System.out.println("Failed to connect to database attempt " + i);
                 System.out.println(sqle.getMessage());
             }
             catch (InterruptedException ie)
@@ -94,7 +94,8 @@ public class App
                             "JOIN dept_manager dm ON de.dept_no = dm.dept_no AND dm.to_date = '9999-01-01' " +
                             "JOIN employees m ON dm.emp_no = m.emp_no " +
                             "WHERE t.to_date = '9999-01-01' " +
-                            "AND s.to_date = '9999-01-01'";
+                            "AND s.to_date = '9999-01-01'" +
+                            "AND e.emp_no = " + ID;
 
 
             // Execute SQL statement
@@ -197,7 +198,7 @@ public class App
         if (employees != null && !employees.isEmpty()) {
             System.out.println("Salaries report by role Engineer");
             for (Employee employee : employees) {
-                System.out.println(employee.first_name + employee.first_name + ": " + employee.salary);
+                System.out.println(employee.first_name + " " + employee.last_name + ": " + employee.salary);
             }
         } else {
             System.out.println("No salaries found or failed to generate the report.");
